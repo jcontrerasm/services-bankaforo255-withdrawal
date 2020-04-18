@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo:3.6.17
+    container_name: mongo-container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - /home/jc/database/mongo/db:/data/db
+      - /home/jc/database/mongo/configdb:/data/configdb
+    ports:
+      - 27017:27017
+
+  postgres:
+    image: postgres:12.2
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - /home/jc/database/postgres/data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+
+  mysql:
+    image: mysql:8.0.19
+    container_name: mysql-container
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /home/jc/database/mysql/data:/var/lib/mysql
+    ports:
+      - 3306:3306
+  
+  kafka:
+    image: johnnypark/kafka-zookeeper
+    container_name: kafka-container
+    environment:
+      ADVERTISED_HOST: 127.0.0.1
+      NUM_PARTITIONS: 10
+    ports:
+      - 2181:2181
+      - 9092:9092
